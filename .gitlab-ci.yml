@@ -45,7 +45,7 @@ deploy:
     - docker stop ${CI_PROJECT_NAME}-$HOST_PORT || true
     - docker rm ${CI_PROJECT_NAME}-$HOST_PORT || true
     - docker network create -d bridge hipstercard-network || true
-    - docker run -d --name ${CI_PROJECT_NAME}-$HOST_PORT --network hipstercard-network -p $HOST_PORT:$CONTAINER_PORT ${CI_PROJECT_NAME}:0.0.1-SNAPSHOT
+    - docker run -d --name ${CI_PROJECT_NAME}-$HOST_PORT --network hipstercard-network -p $HOST_PORT:$CONTAINER_PORT ${CI_PROJECT_NAME}:1.0.0-team4
   only:
     refs:
       - main
