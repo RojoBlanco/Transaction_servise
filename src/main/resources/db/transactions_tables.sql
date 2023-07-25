@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS operation_category(
     name VARCHAR(255) NOT NULL UNIQUE,
     cashback_percent DOUBLE PRECISION NOT NULL,
     status INTEGER NOT NULL,
-    ts BIGINT
+    ts BIGINT DEFAULT 1
 );
 
 CREATE SEQUENCE IF NOT EXISTS operation_category_seq
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS organization(
     code UUID NOT NULL UNIQUE,
     cashback_percent DOUBLE PRECISION NOT NULL,
     status INTEGER NOT NULL,
-    ts BIGINT
+    ts BIGINT DEFAULT 2
 );
 
 -- Table describing transaction
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS transactions(
     date TIMESTAMP(6) WITHOUT TIME ZONE NOT NULL,
     organization_code UUID NOT NULL ,
     operation_category VARCHAR(255) NOT NULL,
-    ts BIGINT,
+    ts BIGINT DEFAULT 1,
     FOREIGN KEY (organization_code) REFERENCES organization(code),
     FOREIGN KEY (operation_category) REFERENCES operation_category(name)
 );
