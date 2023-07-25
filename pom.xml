@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ru.croc</groupId>
 	<artifactId>transactions-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-team4</version>
 	<name>transactions-service</name>
 	<description>Transactions service for the Hipstercard project</description>
 	<properties>
@@ -23,7 +23,7 @@
 
 	</properties>
 	<dependencies>
-
+		<!-- JXFW -->
 		<dependency>
 			<groupId>ru.croc.ctp</groupId>
 			<artifactId>jxfw-jpa-runtime</artifactId>
@@ -35,62 +35,63 @@
 			<version>${ctp.version}</version>
 		</dependency>
 
+		<!-- Spring Data -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
 			<classifier>jakarta</classifier>
 			<version>${querydsl.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
 
+		<!-- Spring Actuator -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- Spring Web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- Testing -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>testcontainers</artifactId>
 			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-
 		</dependency>
 
-
+		<!-- Lombok -->
 		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
