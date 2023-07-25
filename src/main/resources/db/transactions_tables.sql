@@ -1,19 +1,9 @@
--- Custom data type
--- How to use: https://www.postgresql.org/docs/current/datatype-enum.html
--- The following script tries to create the contribution_status custom type.
--- If such type already exists then the transaction won't be aborted
-DO $$ BEGIN
-    CREATE TYPE contribution_status AS ENUM ('APPROVED', 'CREATED', 'DECLINED');
-EXCEPTION
-    WHEN duplicate_object THEN null;
-END $$;
-
 -- Table describing the operation category
 CREATE TABLE IF NOT EXISTS operation_category(
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     cashback_percent DOUBLE PRECISION NOT NULL,
-    status contribution_status NOT NULL
+    status INTEGER NOT NULL
 );
 
 -- Table describing organization
@@ -21,7 +11,7 @@ CREATE TABLE IF NOT EXISTS organisation(
     id BIGSERIAL PRIMARY KEY,
     code UUID NOT NULL UNIQUE,
     cashback_percent DOUBLE PRECISION NOT NULL,
-    status contribution_status NOT NULL
+    status INTEGER NOT NULL
 );
 
 -- Table describing transaction
