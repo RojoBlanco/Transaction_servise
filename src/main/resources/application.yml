@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: transactions-service
+
+server:
+  port: 8081
+
+#eureka:
+#  client:
+#    preferIpAddress: true
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone:
+#        http://localhost:8070/eureka/
+
