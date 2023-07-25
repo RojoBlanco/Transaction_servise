@@ -1,6 +1,22 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/transactions-db
+    username: transactions-db-user
+    password: transactions-db-password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: transactions-service
+
 
 server:
   port: 8081
