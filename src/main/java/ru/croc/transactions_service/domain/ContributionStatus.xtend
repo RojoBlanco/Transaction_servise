@@ -23,5 +23,11 @@ public enum ContributionStatus {
          * Запрос отклонен.
          */
          @XFWEnumId(3)
-    DECLINED
+    DECLINED,
+
+    /**
+    * Запрос удален.
+    */
+    @XFWEnumId(4)
+    DELETED
 }
