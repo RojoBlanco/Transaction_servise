@@ -9,7 +9,7 @@ import ru.croc.ctp.jxfw.core.generator.meta.XFWObject;
 import java.util.UUID;
 
 @XFWObject
-public class Operation {
+public class Organisation {
     /**
      * Идентификатор категории
      */
