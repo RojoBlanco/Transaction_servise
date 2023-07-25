@@ -54,8 +54,8 @@ public class Transaction {
     /**
      * Код организации
      */
-     @Column(name = "organisation_code", nullable = false)
-    private UUID organisationCode;
+     @Column(name = "organization_code", nullable = false)
+    private UUID organizationCode;
     /**
      * Имя категории
      */

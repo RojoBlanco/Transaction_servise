@@ -11,14 +11,14 @@ import ru.croc.ctp.jxfw.core.generator.meta.XFWObject;
 import java.util.UUID;
 
 @XFWObject
-@Table(name = "organisation")
-public class Organisation {
+@Table(name = "organization")
+public class Organization {
     /**
      * Идентификатор категории
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organisation_seq")
-    @SequenceGenerator(name = "organisation_seq", sequenceName = "organisation_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_seq")
+    @SequenceGenerator(name = "organization_seq", sequenceName = "organization_seq", allocationSize = 1)
     private Long id;
 
     /**
