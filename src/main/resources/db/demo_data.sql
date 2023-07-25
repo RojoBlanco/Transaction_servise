@@ -1,29 +1,29 @@
 INSERT INTO operation_category (name, cashback_percent, status)
 VALUES
-    ('Groceries', 5.0, 'APPROVED'),
-    ('Electronics', 2.5, 'APPROVED'),
-    ('Fashion', 3.0, 'APPROVED'),
-    ('Home & Garden', 4.0, 'CREATED'),
-    ('Health & Beauty', 2.0, 'APPROVED'),
-    ('Books & Stationery', 1.5, 'APPROVED'),
-    ('Toys & Games', 2.0, 'DECLINED'),
-    ('Sports & Outdoors', 3.5, 'APPROVED'),
-    ('Automotive', 2.0, 'APPROVED'),
-    ('Jewelry', 2.5, 'APPROVED');
+    ('Groceries', 5.0, 2),
+    ('Electronics', 2.5, 2),
+    ('Fashion', 3.0, 2),
+    ('Home & Garden', 4.0, 1),
+    ('Health & Beauty', 2.0, 2),
+    ('Books & Stationery', 1.5, 2),
+    ('Toys & Games', 2.0, 3),
+    ('Sports & Outdoors', 3.5, 2),
+    ('Automotive', 2.0, 2),
+    ('Jewelry', 2.5, 2);
 
 
 INSERT INTO organisation (code, cashback_percent, status)
 VALUES
-    ('11111111-1111-1111-1111-111111111111', 5.0, 'APPROVED'),
-    ('22222222-2222-2222-2222-222222222222', 3.5, 'APPROVED'),
-    ('33333333-3333-3333-3333-333333333333', 2.0, 'DECLINED'),
-    ('44444444-4444-4444-4444-444444444444', 4.0, 'APPROVED'),
-    ('55555555-5555-5555-5555-555555555555', 3.0, 'APPROVED'),
-    ('66666666-6666-6666-6666-666666666666', 2.5, 'APPROVED'),
-    ('77777777-7777-7777-7777-777777777777', 1.5, 'APPROVED'),
-    ('88888888-8888-8888-8888-888888888888', 2.0, 'CREATED'),
-    ('99999999-9999-9999-9999-999999999999', 3.0, 'APPROVED'),
-    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 4.5, 'APPROVED');
+    ('11111111-1111-1111-1111-111111111111', 5.0, 2),
+    ('22222222-2222-2222-2222-222222222222', 3.5, 2),
+    ('33333333-3333-3333-3333-333333333333', 2.0, 3),
+    ('44444444-4444-4444-4444-444444444444', 4.0, 2),
+    ('55555555-5555-5555-5555-555555555555', 3.0, 2),
+    ('66666666-6666-6666-6666-666666666666', 2.5, 2),
+    ('77777777-7777-7777-7777-777777777777', 1.5, 2),
+    ('88888888-8888-8888-8888-888888888888', 2.0, 1),
+    ('99999999-9999-9999-9999-999999999999', 3.0, 2),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 4.5, 2);
 
 
 INSERT INTO transactions (bank_account_number, transaction_sum, balance_before_transaction, client_id, date, organisation_code, operation_category)

@@ -16,6 +16,9 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: transactions-service
+  liquibase:
+    change-log: classpath:/db/changelog.xml
+
 
 
 server:
