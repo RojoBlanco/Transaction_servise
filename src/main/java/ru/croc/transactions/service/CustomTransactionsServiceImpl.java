@@ -7,6 +7,8 @@ import org.springframework.web.client.RestTemplate;
 import ru.croc.transactions.domain.ContributionStatus;
 import ru.croc.transactions.domain.OperationCategory;
 import ru.croc.transactions.domain.Organization;
+import ru.croc.transactions.domain.Transaction;
+import ru.croc.transactions.domain.repo.TransactionRepository;
 import ru.croc.transactions.dto.BankAccountDTO;
 import ru.croc.transactions.dto.CardDTO;
 import ru.croc.transactions.dto.CashbackTransactionDTO;
@@ -33,6 +35,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
 
     private final CustomOrganizationRepository organizationRepository;
     private final CustomOperationCategoryRepository operationCategoryRepository;
+    private final TransactionRepository transactionRepository;
 
     @Override
     public CashbackTransactionDTO handleCashbackTransaction(TransactionDTO transactionDTO) {
@@ -58,6 +61,8 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
             finalCashback = calculateFinalCashback(cardDTO, transactionDTO);
         }
 
+        saveTransactionToDatabase(transactionDTO);
+
         return CashbackTransactionDTO.builder()
                 .bankAccountNumber(transactionDTO.getBankAccountNumber())
                 .balanceAfterTransaction(transactionDTO.getBalanceAfterTransaction())
@@ -67,22 +72,6 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
                 .date(transactionDTO.getDate())
                 .cashback(finalCashback)
                 .build();
-    }
-
-    private BigDecimal calculateFinalCashback(CardDTO cardDTO, TransactionDTO transactionDTO) {
-        BigDecimal cardCashbackPercent = cardDTO.getCashbackPercent();
-        BigDecimal organizationCashbackPercent = getOrganizationCashbackPercent(transactionDTO.getOrganisationCode());
-        BigDecimal operationCategoryCashbackPercent = getOperationCategoryCashbackPercent(transactionDTO.getOperationCategory());
-
-        BigDecimal finalCashbackPercent = findMaxCashbackPercent(cardCashbackPercent,
-                organizationCashbackPercent, operationCategoryCashbackPercent);
-
-        log.info("Final max cashback percent is: {}%", finalCashbackPercent);
-        return finalCashbackPercent;
-    }
-
-    private boolean checkWasTransactionInLastPeriod(TransactionDTO transactionDTO) {
-        return true;
     }
 
     private boolean checkMinBalanceBeforeTransaction(CardDTO cardDTO, BigDecimal transactionSum,
@@ -97,6 +86,22 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
         }
 
         return true;
+    }
+
+    private boolean checkWasTransactionInLastPeriod(TransactionDTO transactionDTO) {
+        return true;
+    }
+
+    private BigDecimal calculateFinalCashback(CardDTO cardDTO, TransactionDTO transactionDTO) {
+        BigDecimal cardCashbackPercent = cardDTO.getCashbackPercent();
+        BigDecimal organizationCashbackPercent = getOrganizationCashbackPercent(transactionDTO.getOrganisationCode());
+        BigDecimal operationCategoryCashbackPercent = getOperationCategoryCashbackPercent(transactionDTO.getOperationCategory());
+
+        BigDecimal finalCashbackPercent = findMaxCashbackPercent(cardCashbackPercent,
+                organizationCashbackPercent, operationCategoryCashbackPercent);
+
+        log.info("Final max cashback percent is: {}%", finalCashbackPercent);
+        return finalCashbackPercent;
     }
 
     private BigDecimal getOrganizationCashbackPercent(UUID organisationCode) {
@@ -129,5 +134,23 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
                                               BigDecimal operationCategoryCashbackPercent) {
         BigDecimal maxFromCardAndOrganization = cardCashbackPercent.max(organizationCashbackPercent);
         return maxFromCardAndOrganization.max(operationCategoryCashbackPercent);
+    }
+
+    private void saveTransactionToDatabase(TransactionDTO transactionDTO) {
+        Transaction transaction = buildTransactionFromDTO(transactionDTO);
+        transactionRepository.save(transaction);
+    }
+
+    private Transaction buildTransactionFromDTO(TransactionDTO transactionDTO) {
+        Transaction transaction = new Transaction();
+        transaction.setBankAccount(transactionDTO.getBankAccountNumber());
+        transaction.setBalanceBeforeTransaction(transactionDTO.getBalanceAfterTransaction()
+                .subtract(transactionDTO.getTransactionSum()));
+        transaction.setTransactionSum(transactionDTO.getTransactionSum());
+        transaction.setOrganizationCode(transactionDTO.getOrganisationCode());
+        transaction.setOperationCategory(transactionDTO.getOperationCategory());
+        transaction.setDate(transactionDTO.getDate());
+
+        return transaction;
     }
 }
