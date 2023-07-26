@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "organization")
 public class Organization {
     /**
-     * Идентификатор категории
+     * Category ID
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_seq")
@@ -22,22 +22,20 @@ public class Organization {
     private Long id;
 
     /**
-     * Номер банковскгого счета
+     *Bank account number
      */
-     @Column(name = "code",nullable = false)
+    @Column(name = "code",nullable = false)
     private UUID code;
 
      /**
-     * Процент кэшбека
+     * cashback_percent
      */
-      @Column(name = "cashbackPercent",nullable = false)
+    @Column(name = "cashbackPercent",nullable = false)
     private Double cashbackPercent;
 
-       /**
-       * Статус изменения
-       */
-       @Column(name = "status",nullable = false)
-       private ContributionStatus status;
-
-
+    /**
+    * Change Status
+    */
+    @Column(name = "status",nullable = false)
+    private ContributionStatus status;
 }

@@ -8,25 +8,25 @@ import ru.croc.ctp.jxfw.core.domain.meta.XFWEnumId
 public enum ContributionStatus {
 
     /**
-     * Запрос создан.
+     * Request created.
      */
-     @XFWEnumId(1)
+    @XFWEnumId(1)
     CREATED,
 
     /**
-     * Запрос принят.
+     * Request accepted
      */
-     @XFWEnumId(2)
+    @XFWEnumId(2)
     APPROVED,
 
-        /**
-         * Запрос отклонен.
-         */
-         @XFWEnumId(3)
+    /**
+     * Запрос отклонен.
+     */
+    @XFWEnumId(3)
     DECLINED,
 
     /**
-    * Запрос удален.
+    * Request deleted.
     */
     @XFWEnumId(4)
     DELETED

@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS transactions(
     bank_account_number UUID NOT NULL,
     transaction_sum DOUBLE PRECISION NOT NULL,
     balance_before_transaction DOUBLE PRECISION NOT NULL,
-    client_id BIGSERIAL NOT NULL,
     date TIMESTAMP(6) WITHOUT TIME ZONE NOT NULL,
     organization_code UUID NOT NULL ,
     operation_category VARCHAR(255) NOT NULL,

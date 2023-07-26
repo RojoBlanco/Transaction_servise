@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @Table(name = "transactions")
 public class Transaction {
     /**
-     * Идентификатор трансакции
+     * Transaction ID
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transactions_seq")
@@ -24,42 +24,40 @@ public class Transaction {
     private Long id;
 
     /**
-     * Номер банковскгого счета
+     * Bank account number
      */
      @Column(name = "bank_account_number", nullable = false)
     private UUID bankAccount;
 
-     /**
-     * ID клиента
-     */
-     @Column(name = "client_id", nullable = false)
-    private Long clientId;
-
     /**
-     * Время транзакции
-     */
-     @Column(name = "date", nullable = false)
-    private Timestamp date;
-    /**
-     * Сумма транзакции
+     * transaction_sum
      */
      @Column(name = "transaction_sum", nullable = false)
     private Double transactionSum;
+
     /**
-     * Баланс до транзакции
+     * balance_before_transaction
      */
      @Column(name = "balance_before_transaction", nullable = false)
     private Double balanceBeforeTransaction;
 
     /**
-     * Код организации
+     * Transaction time
      */
-     @Column(name = "organization_code", nullable = false)
+     @Column(name = "date", nullable = false)
+    private Timestamp date;
+
+
+
+    /**
+     * Organization code
+     */
+    @Column(name = "organization_code", nullable = false)
     private UUID organizationCode;
     /**
-     * Имя категории
+     * Category name
      */
-     @Column(name = "operation_category", nullable = false)
+    @Column(name = "operation_category", nullable = false)
     private String operationCategory;
 
 }
