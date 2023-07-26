@@ -1,4 +1,4 @@
-package ru.croc.transactions_service;
+package ru.croc.transactions;
 
 import jakarta.servlet.ServletContext;
 import org.springframework.boot.SpringApplication;

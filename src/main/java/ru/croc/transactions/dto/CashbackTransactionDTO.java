@@ -1,11 +1,11 @@
-package ru.croc.transactions_service.dto;
+package ru.croc.transactions.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.eclipse.xtend.lib.annotations.Data;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -13,13 +13,12 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionDTO {
+public class CashbackTransactionDTO {
     private UUID bankAccountNumber;
+    private BigDecimal balanceAfterTransaction;
+    private BigDecimal transactionSum;
     private UUID organisationCode;
-    private double transactionSum;
-    private double balanceAfterTransaction;
-
-    @NotBlank(message = "Operation category should not be blank!")
     private String operationCategory;
     private Timestamp date;
+    private BigDecimal cashback;
 }
