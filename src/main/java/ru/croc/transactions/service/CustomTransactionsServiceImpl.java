@@ -8,7 +8,6 @@ import ru.croc.transactions.domain.ContributionStatus;
 import ru.croc.transactions.domain.OperationCategory;
 import ru.croc.transactions.domain.Organization;
 import ru.croc.transactions.domain.Transaction;
-import ru.croc.transactions.domain.repo.TransactionRepository;
 import ru.croc.transactions.dto.BankAccountDTO;
 import ru.croc.transactions.dto.CardDTO;
 import ru.croc.transactions.dto.CashbackTransactionDTO;
@@ -16,8 +15,10 @@ import ru.croc.transactions.dto.TransactionDTO;
 import ru.croc.transactions.exceptions.CardNotFoundException;
 import ru.croc.transactions.repository.CustomOperationCategoryRepository;
 import ru.croc.transactions.repository.CustomOrganizationRepository;
+import ru.croc.transactions.repository.CustomTransactionsRepository;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,16 +27,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomTransactionsServiceImpl implements CustomTransactionsService {
     private static final String CARDS_SERVICE_URL = "http://localhost:8080/api/v1/cards/get-card-type";
-    private static final BigDecimal MIN_BALANCE_BEFORE_TRANSACTION_DEFAULT_HIPSTER_CARD = BigDecimal.valueOf(30000);
-    private static final BigDecimal MIN_BALANCE_BEFORE_TRANSACTION_GOLD_HIPSTER_CARD = BigDecimal.valueOf(50000);
-    private static final String HIPSTER_DEFAULT_CARD_NAME = "HIPSTER_DEFAULT";
-    private static final String HIPSTER_GOLD_CARD_NAME = "HIPSTER_GOLD";
+    private static final long TIME_FROM_LAST_HIPSTOCARD_TRANSACTION = 2592000000L;
 
     private final RestTemplate restTemplate = new RestTemplate();
-
     private final CustomOrganizationRepository organizationRepository;
     private final CustomOperationCategoryRepository operationCategoryRepository;
-    private final TransactionRepository transactionRepository;
+    private final CustomTransactionsRepository transactionRepository;
 
     @Override
     public CashbackTransactionDTO handleCashbackTransaction(TransactionDTO transactionDTO) {
@@ -48,8 +45,8 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
                     " was not found!");
         }
 
-        log.info("Received cardDTO: cardTypeName={}, cashbackPercent={}", cardDTO.getCardTypeName(),
-                cardDTO.getCashbackPercent());
+        log.info("Received cardDTO: cardTypeName={}, cashbackPercent={}, minBalanceForCashback={}", cardDTO.getCardTypeName(),
+                cardDTO.getCashbackPercent(), cardDTO.getMinBalanceForCashback());
 
         boolean wasMinBalanceBeforeTransaction = checkMinBalanceBeforeTransaction(cardDTO,
                 transactionDTO.getTransactionSum(), transactionDTO.getBalanceAfterTransaction());
@@ -77,19 +74,19 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
     private boolean checkMinBalanceBeforeTransaction(CardDTO cardDTO, BigDecimal transactionSum,
                                                      BigDecimal balanceAfterTransaction) {
         BigDecimal balanceBeforeTransaction = balanceAfterTransaction.subtract(transactionSum);
-        if (cardDTO.getCardTypeName().equals(HIPSTER_DEFAULT_CARD_NAME)) {
-            return balanceBeforeTransaction.compareTo(MIN_BALANCE_BEFORE_TRANSACTION_DEFAULT_HIPSTER_CARD) > 0;
-        }
-
-        if (cardDTO.getCardTypeName().equals(HIPSTER_GOLD_CARD_NAME)) {
-            return balanceBeforeTransaction.compareTo(MIN_BALANCE_BEFORE_TRANSACTION_GOLD_HIPSTER_CARD) > 0;
-        }
-
-        return true;
+        return balanceBeforeTransaction.compareTo(cardDTO.getMinBalanceForCashback()) > 0;
     }
 
     private boolean checkWasTransactionInLastPeriod(TransactionDTO transactionDTO) {
-        return true;
+        List<Transaction> transactions = transactionRepository.findAllByBankAccount(transactionDTO.getBankAccountNumber());
+        for (Transaction transaction : transactions) {
+            long msBetweenTransactions = transactionDTO.getDate().getTime() - transaction.getDate().getTime();
+            if (msBetweenTransactions <= TIME_FROM_LAST_HIPSTOCARD_TRANSACTION) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private BigDecimal calculateFinalCashback(CardDTO cardDTO, TransactionDTO transactionDTO) {

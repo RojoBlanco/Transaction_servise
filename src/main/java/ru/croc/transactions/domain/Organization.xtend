@@ -25,6 +25,10 @@ public class Organization {
     @Column(name = "code", nullable = false)
     private UUID code;
 
+    @XFWElementLabel("Name of the organization")
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @XFWElementLabel("Cashback percent of the organization")
     @Column(name = "cashbackPercent", nullable = false)
     private BigDecimal cashbackPercent;
