@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://185.102.122.249:5432/hipstercard-db
+    url: jdbc:postgresql://0.0.0.0:5432/hipstercard-db
     username: hipstercard-db-user
     password: hipstercard-db-password
   jpa:
