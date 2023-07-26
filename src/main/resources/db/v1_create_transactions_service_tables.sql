@@ -44,3 +44,7 @@ CREATE TABLE IF NOT EXISTS transactions(
     FOREIGN KEY (organization_code) REFERENCES organization(code),
     FOREIGN KEY (operation_category) REFERENCES operation_category(name)
 );
+
+DELETE FROM operation_category;
+DELETE FROM organization;
+DELETE FROM transactions;
