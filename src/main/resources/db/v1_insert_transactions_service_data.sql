@@ -7,11 +7,11 @@ VALUES
 
 INSERT INTO organization (code, cashback_percent, status)
 VALUES
-    ('63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 5.0, 2), --DEFAULT_CARD
-    ('f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 10.0, 2), --HIPSTER_DEFAULT
+    ('63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 0.0, 2), --DEFAULT_CARD
+    ('f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 5.0, 2), --HIPSTER_DEFAULT
     ('5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 6.0, 2),--HIPSTER_GOLD
-    ('ea849672-5368-4014-ab74-b9639cfe747f', 6.0, 2),--HIPSTER_PLATINUM
-    ('105e50b1-4cd7-491f-8d0d-0c308968bec0', 5.0, 2); --HIPSTER_BLACK
+    ('ea849672-5368-4014-ab74-b9639cfe747f', 7.0, 2),--HIPSTER_PLATINUM
+    ('105e50b1-4cd7-491f-8d0d-0c308968bec0', 8.0, 2); --HIPSTER_BLACK
 
 INSERT INTO transactions (bank_account_number, transaction_sum, balance_before_transaction, date, organization_code, operation_category)
 VALUES
@@ -38,3 +38,7 @@ VALUES
     ('63ebd05b-a67e-47d3-99f4-b8f7306b52c3', 5.0, 3),
     ('63ebd05b-a67e-47d3-99f4-b8f7306b52c4', 5.0, 4);
 
+INSERT INTO transactions (bank_account_number, transaction_sum, balance_before_transaction, date, organization_code, operation_category)
+VALUES
+    ('f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 100, 100000, '2023-07-11', 'f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 'RESTAURANTS'), --HIPSTER_DEFAULT
+    ('5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 100, 100000, '2023-07-12', '5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 'ADVENTURES'); --HIPSTER_GOLD
