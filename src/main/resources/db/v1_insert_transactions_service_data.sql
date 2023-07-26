@@ -5,40 +5,20 @@ VALUES
     ('ADVENTURES', 2.0, 2),
     ('SPORT', 3.0, 2);
 
-INSERT INTO organization (code, cashback_percent, status)
+INSERT INTO organization (code, name, cashback_percent, status)
 VALUES
-    ('63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 0.0, 2), --DEFAULT_CARD
-    ('f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 5.0, 2), --HIPSTER_DEFAULT
-    ('5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 6.0, 2),--HIPSTER_GOLD
-    ('ea849672-5368-4014-ab74-b9639cfe747f', 7.0, 2),--HIPSTER_PLATINUM
-    ('105e50b1-4cd7-491f-8d0d-0c308968bec0', 8.0, 2); --HIPSTER_BLACK
-
-INSERT INTO transactions (bank_account_number, transaction_sum, balance_before_transaction, date, organization_code, operation_category)
-VALUES
-    ('63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 100, 100, '2023-07-01', '63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 'FUEL'), --DEFAULT_CARD
-    ('f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 100, 100, '2023-07-02', 'f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 'RESTAURANTS'), --HIPSTER_DEFAULT
-    ('5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 100, 100, '2023-07-03', '5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 'ADVENTURES'),--HIPSTER_GOLD
-    ('ea849672-5368-4014-ab74-b9639cfe747f', 100, 100, '2023-07-04', 'ea849672-5368-4014-ab74-b9639cfe747f', 'FUEL'), --HIPSTER_PLATINUM
-    ('105e50b1-4cd7-491f-8d0d-0c308968bec0', 100, 100, '2022-07-05', '105e50b1-4cd7-491f-8d0d-0c308968bec0', 'FUEL'), --HIPSTER_BLACK
-    ('63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 100, 100, '2023-07-06', '63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 'FUEL'), --DEFAULT_CARD
-    ('f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 100, 100, '2023-07-07', 'f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 'RESTAURANTS'), --HIPSTER_DEFAULT
-    ('5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 100, 100, '2023-07-08', '5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 'ADVENTURES'),--HIPSTER_GOLD
-    ('ea849672-5368-4014-ab74-b9639cfe747f', 100, 100, '2023-07-09', 'ea849672-5368-4014-ab74-b9639cfe747f', 'FUEL'), --HIPSTER_PLATINUM
-    ('105e50b1-4cd7-491f-8d0d-0c308968bec0', 100, 100, '2022-07-10', '105e50b1-4cd7-491f-8d0d-0c308968bec0', 'FUEL'); --HIPSTER_BLACK
+    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 'Yandex-Market', 1.0, 2),
+    ('778105b4-662b-488b-9543-4f464b981908', 'Ozon', 5.0, 2),
+    ('70e40b37-c01e-4632-8792-78c96eb5a222', 'Aviasales', 6.0, 2),
+    ('4f8a8515-fbd0-4a8b-ab74-04f7268f6cad', 'Wildberries', 7.0, 2),
+    ('2c88db9d-9d6f-4fcd-b6e8-e85ede92b997', 'Pyatyorochka', 8.0, 2);
 
 INSERT INTO operation_category (name, cashback_percent, status)
 VALUES
-    ('COMPUTER_GAMES', 1.5, 1),
-    ('AUTOMOBILES', 1.7, 3),
-    ('MEDICINE', 2.0, 4);
-
-INSERT INTO organization (code, cashback_percent, status)
-VALUES
-    ('63ebd05b-a67e-47d3-99f4-b8f7306b52c1', 5.0, 1),
-    ('63ebd05b-a67e-47d3-99f4-b8f7306b52c3', 5.0, 3),
-    ('63ebd05b-a67e-47d3-99f4-b8f7306b52c4', 5.0, 4);
+    ('COMPUTER_GAMES', 1.5, 2),
+    ('AUTOMOBILES', 1.7, 2),
+    ('MEDICINE', 2.0, 2);
 
 INSERT INTO transactions (bank_account_number, transaction_sum, balance_before_transaction, date, organization_code, operation_category)
 VALUES
-    ('f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 100, 100000, '2023-07-11', 'f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 'RESTAURANTS'), --HIPSTER_DEFAULT
-    ('5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 100, 100000, '2023-07-12', '5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 'ADVENTURES'); --HIPSTER_GOLD
+    ('63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 5000, 100000, '2023-07-01', '03931816-79bc-45b3-b145-db2e4bf3a27b', 'FUEL'); -- DEFAULT_CARD, Yandex-Market, Fuel

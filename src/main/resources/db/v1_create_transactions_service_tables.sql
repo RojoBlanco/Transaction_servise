@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS operation_category (
 CREATE TABLE IF NOT EXISTS organization (
     id BIGSERIAL PRIMARY KEY,
     code UUID NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL UNIQUE,
     cashback_percent NUMERIC NOT NULL,
     status INTEGER NOT NULL,
     ts BIGINT DEFAULT 1

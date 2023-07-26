@@ -14,4 +14,5 @@ import java.math.BigDecimal;
 public class CardDTO {
     private String cardTypeName;
     private BigDecimal cashbackPercent;
+    private BigDecimal minBalanceForCashback;
 }
