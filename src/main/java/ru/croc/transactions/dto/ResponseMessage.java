@@ -5,13 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class CardDTO {
-    private String cardTypeName;
-    private BigDecimal cashbackPercent;
+@NoArgsConstructor
+public class ResponseMessage {
+    private String message;
 }
