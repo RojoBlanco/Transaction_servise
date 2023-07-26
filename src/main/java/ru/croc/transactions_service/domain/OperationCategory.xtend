@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @Table(name = "operation_category")
 public class OperationCategory {
     /**
-     * Идентификатор Категории
+     * Category ID
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "operation_category_seq")
@@ -24,19 +24,19 @@ public class OperationCategory {
     private Long id;
 
     /**
-     * название категории
+     * name of category
      */
      @Column(name = "name", nullable = false)
     private String name;
 
      /**
-     * Процент кэшбека
+     * Cashback percentage
      */
      @Column(name = "cashback_percent",nullable = false)
     private Double cashbackPercent;
 
     /**
-    * Статус изменения
+    * Change Status
     */
       @Column(name = "status",nullable = false)
        private ContributionStatus status;
