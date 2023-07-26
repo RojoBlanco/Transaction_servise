@@ -1,4 +1,4 @@
-package ru.croc.transactions_service;
+package ru.croc.transactions;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

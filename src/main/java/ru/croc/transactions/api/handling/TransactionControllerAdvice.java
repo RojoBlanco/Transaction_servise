@@ -1,4 +1,4 @@
-package ru.croc.transactions_service.api.handling;
+package ru.croc.transactions.api.handling;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
