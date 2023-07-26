@@ -26,5 +26,15 @@ VALUES
     ('ea849672-5368-4014-ab74-b9639cfe747f', 100, 100, '2023-07-09', 'ea849672-5368-4014-ab74-b9639cfe747f', 'FUEL'), --HIPSTER_PLATINUM
     ('105e50b1-4cd7-491f-8d0d-0c308968bec0', 100, 100, '2022-07-10', '105e50b1-4cd7-491f-8d0d-0c308968bec0', 'FUEL'); --HIPSTER_BLACK
 
+INSERT INTO operation_category (name, cashback_percent, status)
+VALUES
+    ('COMPUTER_GAMES', 1.5, 1),
+    ('AUTOMOBILES', 1.7, 3),
+    ('MEDICINE', 2.0, 4);
 
+INSERT INTO organization (code, cashback_percent, status)
+VALUES
+    ('63ebd05b-a67e-47d3-99f4-b8f7306b52c1', 5.0, 1),
+    ('63ebd05b-a67e-47d3-99f4-b8f7306b52c3', 5.0, 3),
+    ('63ebd05b-a67e-47d3-99f4-b8f7306b52c4', 5.0, 4);
 
