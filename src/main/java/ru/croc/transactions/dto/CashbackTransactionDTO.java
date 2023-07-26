@@ -2,8 +2,8 @@ package ru.croc.transactions.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.eclipse.xtend.lib.annotations.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

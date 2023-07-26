@@ -6,6 +6,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.croc.transactions.dto.ResponseMessage;
+import ru.croc.transactions.exceptions.CardNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,5 +25,13 @@ public class TransactionControllerAdvice {
         });
 
         return errors;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CardNotFoundException.class)
+    public ResponseMessage handleBankAccountNotFoundException(Exception exception) {
+        return ResponseMessage.builder()
+                .message(exception.getMessage())
+                .build();
     }
 }
