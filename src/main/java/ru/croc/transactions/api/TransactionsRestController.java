@@ -20,9 +20,7 @@ public class TransactionsRestController {
 
     @PostMapping("/handle-cashback-transaction")
     public CashbackTransactionDTO handleCashbackTransaction(@Valid @RequestBody TransactionDTO transactionDTO) {
-        log.info("Received transaction with bank account number: {}",
-                transactionDTO.getBankAccountNumber());
-
+        log.info("Received transactionDTO: {}", transactionDTO);
         return transactionsService.handleCashbackTransaction(transactionDTO);
     }
 }
