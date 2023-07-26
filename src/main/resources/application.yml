@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/transactions-db
-    username: transactions-db-user
-    password: transactions-db-password
+    url: jdbc:postgresql://127.0.0.1:5432/hipstercard-db
+    username: hipstercard-db-user
+    password: hipstercard-db-password
   jpa:
     hibernate:
       ddl-auto: update
