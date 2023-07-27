@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.croc.transactions.dto.CashbackTransactionDTO;
 import ru.croc.transactions.dto.TransactionDTO;
 import ru.croc.transactions.service.CustomTransactionsService;
 
@@ -19,7 +18,7 @@ public class TransactionsRestController {
     private final CustomTransactionsService transactionsService;
 
     @PostMapping("/handle-cashback-transaction")
-    public CashbackTransactionDTO handleCashbackTransaction(@Valid @RequestBody TransactionDTO transactionDTO) {
+    public TransactionDTO handleCashbackTransaction(@Valid @RequestBody TransactionDTO transactionDTO) {
         log.info("Received transactionDTO: {}", transactionDTO);
         return transactionsService.handleCashbackTransaction(transactionDTO);
     }
