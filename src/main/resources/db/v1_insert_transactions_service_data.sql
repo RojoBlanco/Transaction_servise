@@ -6,7 +6,7 @@ VALUES
     ('SPORT', 3.0, 2),
     ('COMPUTER_GAMES', 1.5, 2),
     ('AUTOMOBILES', 1.7, 2),
-    ('MEDICINE', 2.0, 2);
+    ('MEDICINE', 20.0, 4);
 
 INSERT INTO organization (code, name, cashback_percent, status)
 VALUES
@@ -14,14 +14,18 @@ VALUES
     ('778105b4-662b-488b-9543-4f464b981908', 'Ozon', 5.0, 2),
     ('70e40b37-c01e-4632-8792-78c96eb5a222', 'Aviasales', 6.0, 2),
     ('4f8a8515-fbd0-4a8b-ab74-04f7268f6cad', 'Wildberries', 7.0, 2),
-    ('2c88db9d-9d6f-4fcd-b6e8-e85ede92b997', 'Pyatyorochka', 8.0, 2);
+    ('2c88db9d-9d6f-4fcd-b6e8-e85ede92b997', 'Pyatyorochka', 20.0, 4);
 
 INSERT INTO organization_flexible_cashback (organization_code, min_transaction_sum, cashback_percent)
 VALUES
-    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 1000, 2.5),
-    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 5000, 3.5),
-    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 15000, 5);
+    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 1000, 2.5), -- Yandex-Market
+    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 5000, 3.5), -- Yandex-Market
+    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 15000, 5); -- Yandex-Market
 
 INSERT INTO transactions (id, bank_account_number, transaction_sum, balance_before_transaction, date, organization_code, operation_category)
 VALUES
-    (991, '63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 5000, 100000, '2023-07-01', '03931816-79bc-45b3-b145-db2e4bf3a27b', 'FUEL'); -- DEFAULT_CARD, Yandex-Market, Fuel
+    (991, '63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 5000, 100000, '2023-07-01', '03931816-79bc-45b3-b145-db2e4bf3a27b', 'FUEL'), -- DEFAULT_CARD, Yandex-Market, Fuel
+    (992, 'f2dea26d-4d41-45ac-8bb6-90b7d58447ec', 5000, 100000, '2023-07-02', '778105b4-662b-488b-9543-4f464b981908', 'RESTAURANTS'), -- HIPSTER_DEFAULT, Ozon, RESTAURANTS
+    (993, '5cc4ed6a-c2c7-4163-bc29-bc76c3ee9cad', 5000, 100000, '2023-07-03', '70e40b37-c01e-4632-8792-78c96eb5a222', 'ADVENTURES'), -- HIPSTER_GOLD, Aviasales, ADVENTURES
+    (994, 'ea849672-5368-4014-ab74-b9639cfe747f', 5000, 100000, '2023-07-04', '4f8a8515-fbd0-4a8b-ab74-04f7268f6cad', 'SPORT'), -- HIPSTER_PLATINUM, Wildberries, SPORT
+    (995, '105e50b1-4cd7-491f-8d0d-0c308968bec0', 5000, 100000, '2023-04-04', '2c88db9d-9d6f-4fcd-b6e8-e85ede92b997', 'COMPUTER_GAMES'); -- HIPSTER_BLACK, Pyatyorochka, COMPUTER_GAMES >30days
