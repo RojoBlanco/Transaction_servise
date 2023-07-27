@@ -7,6 +7,7 @@ import ru.croc.transactions.clients.CardsClient;
 import ru.croc.transactions.domain.ContributionStatus;
 import ru.croc.transactions.domain.OperationCategory;
 import ru.croc.transactions.domain.Organization;
+import ru.croc.transactions.domain.OrganizationFlexibleCashback;
 import ru.croc.transactions.domain.Transaction;
 import ru.croc.transactions.dto.BankAccountDTO;
 import ru.croc.transactions.dto.CardDTO;
@@ -14,6 +15,7 @@ import ru.croc.transactions.dto.CashbackTransactionDTO;
 import ru.croc.transactions.dto.TransactionDTO;
 import ru.croc.transactions.exceptions.OperationCategoryNotFoundException;
 import ru.croc.transactions.exceptions.OrganizationNotFoundException;
+import ru.croc.transactions.repository.CustomFlexibleOrganizationCashbackRepository;
 import ru.croc.transactions.repository.CustomOperationCategoryRepository;
 import ru.croc.transactions.repository.CustomOrganizationRepository;
 import ru.croc.transactions.repository.CustomTransactionsRepository;
@@ -32,6 +34,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
     private final CustomOrganizationRepository organizationRepository;
     private final CustomOperationCategoryRepository operationCategoryRepository;
     private final CustomTransactionsRepository transactionRepository;
+    private final CustomFlexibleOrganizationCashbackRepository flexibleOrganizationCashbackRepository;
     private final CardsClient cardsClient;
 
     @Override
@@ -39,8 +42,8 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
         CardDTO cardDTO = cardsClient.getCardType(BankAccountDTO.builder()
                 .bankAccount(transactionDTO.getBankAccountNumber()).build());
 
-        log.info("Received cardDTO: cardTypeName={}, cashbackPercent={}, minBalanceForCashback={}", cardDTO.getCardTypeName(),
-                cardDTO.getCashbackPercent(), cardDTO.getMinBalanceForCashback());
+        log.info("Received cardDTO: cardTypeName={}, cashbackPercent={}, minBalanceForCashback={}",
+                cardDTO.getCardTypeName(), cardDTO.getCashbackPercent(), cardDTO.getMinBalanceForCashback());
 
         boolean wasMinBalanceBeforeTransaction = checkMinBalanceBeforeTransaction(cardDTO,
                 transactionDTO.getTransactionSum(), transactionDTO.getBalanceAfterTransaction());
@@ -87,9 +90,11 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
         BigDecimal cardCashbackPercent = cardDTO.getCashbackPercent();
         BigDecimal organizationCashbackPercent = getOrganizationCashbackPercent(transactionDTO.getOrganisationCode());
         BigDecimal operationCategoryCashbackPercent = getOperationCategoryCashbackPercent(transactionDTO.getOperationCategory());
+        BigDecimal flexibleOrganizationCashback = getFlexibleOrganizationCashback(transactionDTO.getOrganisationCode(),
+                transactionDTO.getTransactionSum());
 
         BigDecimal finalCashbackPercent = findMaxCashbackPercent(cardCashbackPercent,
-                organizationCashbackPercent, operationCategoryCashbackPercent);
+                organizationCashbackPercent, operationCategoryCashbackPercent, flexibleOrganizationCashback);
 
         log.info("Final max cashback percent is: {}%", finalCashbackPercent);
         return finalCashbackPercent;
@@ -121,10 +126,26 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
         return operationCategory.get().getCashbackPercent();
     }
 
+    private BigDecimal getFlexibleOrganizationCashback(UUID organisationCode, BigDecimal transactionSum) {
+        List<OrganizationFlexibleCashback> organizationFlexibleCashbacks =
+                flexibleOrganizationCashbackRepository.findAllByOrganizationCode(organisationCode);
+
+        BigDecimal flexibleOrganizationCashback = BigDecimal.ZERO;
+        for (OrganizationFlexibleCashback organizationFlexibleCashback : organizationFlexibleCashbacks) {
+            if (transactionSum.compareTo(organizationFlexibleCashback.getMinTransactionSum()) >= 0) {
+                flexibleOrganizationCashback = flexibleOrganizationCashback.max(organizationFlexibleCashback.getCashbackPercent());
+            }
+        }
+
+        return flexibleOrganizationCashback;
+    }
+
     private BigDecimal findMaxCashbackPercent(BigDecimal cardCashbackPercent, BigDecimal organizationCashbackPercent,
-                                              BigDecimal operationCategoryCashbackPercent) {
+                                              BigDecimal operationCategoryCashbackPercent,
+                                              BigDecimal flexibleOrganizationCashback) {
         BigDecimal maxFromCardAndOrganization = cardCashbackPercent.max(organizationCashbackPercent);
-        return maxFromCardAndOrganization.max(operationCategoryCashbackPercent);
+        BigDecimal maxFromOperationAndFlexible = operationCategoryCashbackPercent.max(flexibleOrganizationCashback);
+        return maxFromCardAndOrganization.max(maxFromOperationAndFlexible);
     }
 
     private void saveTransactionToDatabase(TransactionDTO transactionDTO) {
