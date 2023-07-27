@@ -1,6 +1,5 @@
 package ru.croc.transactions.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +12,5 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BankAccountDTO {
-    @JsonProperty(value = "bankAccount")
     private UUID bankAccount;
 }

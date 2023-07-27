@@ -3,7 +3,7 @@ package ru.croc.transactions.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import ru.croc.transactions.clients.CardsClient;
 import ru.croc.transactions.domain.ContributionStatus;
 import ru.croc.transactions.domain.OperationCategory;
 import ru.croc.transactions.domain.Organization;
@@ -12,7 +12,8 @@ import ru.croc.transactions.dto.BankAccountDTO;
 import ru.croc.transactions.dto.CardDTO;
 import ru.croc.transactions.dto.CashbackTransactionDTO;
 import ru.croc.transactions.dto.TransactionDTO;
-import ru.croc.transactions.exceptions.CardNotFoundException;
+import ru.croc.transactions.exceptions.OperationCategoryNotFoundException;
+import ru.croc.transactions.exceptions.OrganizationNotFoundException;
 import ru.croc.transactions.repository.CustomOperationCategoryRepository;
 import ru.croc.transactions.repository.CustomOrganizationRepository;
 import ru.croc.transactions.repository.CustomTransactionsRepository;
@@ -26,24 +27,17 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 public class CustomTransactionsServiceImpl implements CustomTransactionsService {
-    private static final String CARDS_SERVICE_URL = "http://localhost:8080/api/v1/cards/get-card-type";
     private static final long TIME_FROM_LAST_HIPSTOCARD_TRANSACTION = 2592000000L;
 
-    private final RestTemplate restTemplate = new RestTemplate();
     private final CustomOrganizationRepository organizationRepository;
     private final CustomOperationCategoryRepository operationCategoryRepository;
     private final CustomTransactionsRepository transactionRepository;
+    private final CardsClient cardsClient;
 
     @Override
     public CashbackTransactionDTO handleCashbackTransaction(TransactionDTO transactionDTO) {
-        CardDTO cardDTO = restTemplate.postForObject(CARDS_SERVICE_URL, BankAccountDTO.builder()
-                .bankAccount(transactionDTO.getBankAccountNumber())
-                .build(), CardDTO.class);
-
-        if (cardDTO == null) {
-            throw new CardNotFoundException("Card with bank account " + transactionDTO.getBankAccountNumber() +
-                    " was not found!");
-        }
+        CardDTO cardDTO = cardsClient.getCardType(BankAccountDTO.builder()
+                .bankAccount(transactionDTO.getBankAccountNumber()).build());
 
         log.info("Received cardDTO: cardTypeName={}, cashbackPercent={}, minBalanceForCashback={}", cardDTO.getCardTypeName(),
                 cardDTO.getCashbackPercent(), cardDTO.getMinBalanceForCashback());
@@ -104,7 +98,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
     private BigDecimal getOrganizationCashbackPercent(UUID organisationCode) {
         Optional<Organization> organization = organizationRepository.findByCode(organisationCode);
         if (organization.isEmpty()) {
-            return BigDecimal.ZERO;
+            throw new OrganizationNotFoundException("Organization with this code is not in database!");
         }
 
         if (!organization.get().getStatus().equals(ContributionStatus.APPROVED)) {
@@ -117,7 +111,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
     private BigDecimal getOperationCategoryCashbackPercent(String operationCategoryName) {
         Optional<OperationCategory> operationCategory = operationCategoryRepository.findByName(operationCategoryName);
         if (operationCategory.isEmpty()) {
-            return BigDecimal.ZERO;
+            throw new OperationCategoryNotFoundException("Operation category with this name is not in database!");
         }
 
         if (!operationCategory.get().getStatus().equals(ContributionStatus.APPROVED)) {

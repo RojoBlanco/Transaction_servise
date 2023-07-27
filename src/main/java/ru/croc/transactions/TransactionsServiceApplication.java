@@ -3,6 +3,7 @@ package ru.croc.transactions;
 import jakarta.servlet.ServletContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import ru.croc.ctp.jxfw.core.config.XfwCoreConfig;
@@ -14,6 +15,7 @@ import java.io.File;
 
 @Import({XfwCoreConfig.class, XfwJpaConfig.class})
 @SpringBootApplication
+@EnableFeignClients
 public class TransactionsServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(TransactionsServiceApplication.class, args);
