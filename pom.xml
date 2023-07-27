@@ -35,6 +35,13 @@
 			<version>${ctp.version}</version>
 		</dependency>
 
+		<!-- Spring Cloud -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>4.0.3</version>
+		</dependency>
+
 		<!-- Spring Data -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
