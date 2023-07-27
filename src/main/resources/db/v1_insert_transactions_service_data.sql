@@ -22,6 +22,6 @@ VALUES
     ('03931816-79bc-45b3-b145-db2e4bf3a27b', 5000, 3.5),
     ('03931816-79bc-45b3-b145-db2e4bf3a27b', 15000, 5);
 
-INSERT INTO transactions (bank_account_number, transaction_sum, balance_before_transaction, date, organization_code, operation_category)
+INSERT INTO transactions (id, bank_account_number, transaction_sum, balance_before_transaction, date, organization_code, operation_category)
 VALUES
-    ('63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 5000, 100000, '2023-07-01', '03931816-79bc-45b3-b145-db2e4bf3a27b', 'FUEL'); -- DEFAULT_CARD, Yandex-Market, Fuel
+    (991, '63ebd05b-a67e-47d3-99f4-b8f7306b52cd', 5000, 100000, '2023-07-01', '03931816-79bc-45b3-b145-db2e4bf3a27b', 'FUEL'); -- DEFAULT_CARD, Yandex-Market, Fuel
