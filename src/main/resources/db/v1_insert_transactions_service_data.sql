@@ -3,7 +3,10 @@ VALUES
     ('FUEL', 1.5, 2),
     ('RESTAURANTS', 1.7, 2),
     ('ADVENTURES', 2.0, 2),
-    ('SPORT', 3.0, 2);
+    ('SPORT', 3.0, 2),
+    ('COMPUTER_GAMES', 1.5, 2),
+    ('AUTOMOBILES', 1.7, 2),
+    ('MEDICINE', 2.0, 2);
 
 INSERT INTO organization (code, name, cashback_percent, status)
 VALUES
@@ -13,11 +16,11 @@ VALUES
     ('4f8a8515-fbd0-4a8b-ab74-04f7268f6cad', 'Wildberries', 7.0, 2),
     ('2c88db9d-9d6f-4fcd-b6e8-e85ede92b997', 'Pyatyorochka', 8.0, 2);
 
-INSERT INTO operation_category (name, cashback_percent, status)
+INSERT INTO organization_flexible_cashback (organization_code, min_transaction_sum, cashback_percent)
 VALUES
-    ('COMPUTER_GAMES', 1.5, 2),
-    ('AUTOMOBILES', 1.7, 2),
-    ('MEDICINE', 2.0, 2);
+    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 1000, 2.5),
+    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 5000, 3.5),
+    ('03931816-79bc-45b3-b145-db2e4bf3a27b', 15000, 5);
 
 INSERT INTO transactions (bank_account_number, transaction_sum, balance_before_transaction, date, organization_code, operation_category)
 VALUES

@@ -19,7 +19,6 @@ import java.io.File;
 public class TransactionsServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(TransactionsServiceApplication.class, args);
-
     }
 
     @Bean
