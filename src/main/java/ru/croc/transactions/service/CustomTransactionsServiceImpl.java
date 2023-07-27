@@ -11,7 +11,6 @@ import ru.croc.transactions.domain.OrganizationFlexibleCashback;
 import ru.croc.transactions.domain.Transaction;
 import ru.croc.transactions.dto.BankAccountDTO;
 import ru.croc.transactions.dto.CardDTO;
-import ru.croc.transactions.dto.CashbackTransactionDTO;
 import ru.croc.transactions.dto.TransactionDTO;
 import ru.croc.transactions.exceptions.OperationCategoryNotFoundException;
 import ru.croc.transactions.exceptions.OrganizationNotFoundException;
@@ -39,7 +38,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
     private final CardsClient cardsClient;
 
     @Override
-    public CashbackTransactionDTO handleCashbackTransaction(TransactionDTO transactionDTO) {
+    public TransactionDTO handleCashbackTransaction(TransactionDTO transactionDTO) {
         CardDTO cardDTO = cardsClient.getCardType(BankAccountDTO.builder()
                 .bankAccount(transactionDTO.getBankAccountNumber()).build());
 
@@ -58,14 +57,13 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
 
         saveTransactionToDatabase(transactionDTO);
 
-        return CashbackTransactionDTO.builder()
+        return TransactionDTO.builder()
                 .bankAccountNumber(transactionDTO.getBankAccountNumber())
                 .balanceAfterTransaction(transactionDTO.getBalanceAfterTransaction())
-                .transactionSum(transactionDTO.getTransactionSum())
+                .transactionSum(transactionDTO.getTransactionSum().multiply(finalCashbackPercent).divide(BigDecimal.valueOf(100)))
                 .organisationCode(transactionDTO.getOrganisationCode())
                 .operationCategory(transactionDTO.getOperationCategory())
                 .date(transactionDTO.getDate())
-                .cashback(transactionDTO.getTransactionSum().multiply(finalCashbackPercent).divide(BigDecimal.valueOf(100)))
                 .build();
     }
 
