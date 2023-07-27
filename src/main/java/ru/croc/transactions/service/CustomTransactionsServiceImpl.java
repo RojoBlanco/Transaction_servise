@@ -29,6 +29,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 public class CustomTransactionsServiceImpl implements CustomTransactionsService {
+    private static final String DEFAULT_CARD_NAME = "DEFAULT_CARD";
     private static final long TIME_FROM_LAST_HIPSTOCARD_TRANSACTION = 2592000000L;
 
     private final CustomOrganizationRepository organizationRepository;
@@ -51,7 +52,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
         boolean wasTransactionInLastPeriod = checkWasTransactionInLastPeriod(transactionDTO);
 
         BigDecimal finalCashbackPercent = BigDecimal.ZERO;
-        if (wasMinBalanceBeforeTransaction && wasTransactionInLastPeriod) {
+        if (wasMinBalanceBeforeTransaction && wasTransactionInLastPeriod && !cardDTO.getCardTypeName().equals(DEFAULT_CARD_NAME)) {
             finalCashbackPercent = calculateFinalCashbackPercent(cardDTO, transactionDTO);
         }
 
@@ -71,6 +72,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
     private boolean checkMinBalanceBeforeTransaction(CardDTO cardDTO, BigDecimal transactionSum,
                                                      BigDecimal balanceAfterTransaction) {
         BigDecimal balanceBeforeTransaction = balanceAfterTransaction.subtract(transactionSum);
+        log.info("balanceBeforeTransaction={}", balanceAfterTransaction);
         return balanceBeforeTransaction.compareTo(cardDTO.getMinBalanceForCashback()) > 0;
     }
 
@@ -79,6 +81,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
         for (Transaction transaction : transactions) {
             long msBetweenTransactions = transactionDTO.getDate().getTime() - transaction.getDate().getTime();
             if (msBetweenTransactions <= TIME_FROM_LAST_HIPSTOCARD_TRANSACTION) {
+                log.info("Found transaction in last period");
                 return true;
             }
         }
