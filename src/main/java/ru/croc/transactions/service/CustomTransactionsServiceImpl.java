@@ -50,9 +50,9 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
 
         boolean wasTransactionInLastPeriod = checkWasTransactionInLastPeriod(transactionDTO);
 
-        BigDecimal finalCashback = BigDecimal.ZERO;
+        BigDecimal finalCashbackPercent = BigDecimal.ZERO;
         if (wasMinBalanceBeforeTransaction && wasTransactionInLastPeriod) {
-            finalCashback = calculateFinalCashback(cardDTO, transactionDTO);
+            finalCashbackPercent = calculateFinalCashbackPercent(cardDTO, transactionDTO);
         }
 
         saveTransactionToDatabase(transactionDTO);
@@ -64,7 +64,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
                 .organisationCode(transactionDTO.getOrganisationCode())
                 .operationCategory(transactionDTO.getOperationCategory())
                 .date(transactionDTO.getDate())
-                .cashback(finalCashback)
+                .cashback(transactionDTO.getTransactionSum().multiply(finalCashbackPercent).divide(BigDecimal.valueOf(100)))
                 .build();
     }
 
@@ -86,7 +86,7 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
         return false;
     }
 
-    private BigDecimal calculateFinalCashback(CardDTO cardDTO, TransactionDTO transactionDTO) {
+    private BigDecimal calculateFinalCashbackPercent(CardDTO cardDTO, TransactionDTO transactionDTO) {
         BigDecimal cardCashbackPercent = cardDTO.getCashbackPercent();
         BigDecimal organizationCashbackPercent = getOrganizationCashbackPercent(transactionDTO.getOrganisationCode());
         BigDecimal operationCategoryCashbackPercent = getOperationCategoryCashbackPercent(transactionDTO.getOperationCategory());

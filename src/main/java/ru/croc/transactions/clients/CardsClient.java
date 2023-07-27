@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.croc.transactions.dto.BankAccountDTO;
 import ru.croc.transactions.dto.CardDTO;
 
-@FeignClient(name = "cards", url = "http://localhost:8080/api/v1/cards")
+@FeignClient(name = "cards", url = "http://localhost:8082/api/v1/cards")
 public interface CardsClient {
     @PostMapping("/get-card-type")
     CardDTO getCardType(BankAccountDTO bankAccountDTO);
