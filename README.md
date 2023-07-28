@@ -2,7 +2,7 @@
 
 This microservice is responsible for .
 
-# 📝 .xtend Models
+## 📝 .xtend Models
 
 There are 5 .xtend models within this microservice:
 
@@ -12,11 +12,11 @@ There are 5 .xtend models within this microservice:
 - [OrganizationFlexibleCashback.xtend](https://gitlab.croc.ru/CROC.DRPO_RnD/jxfw/sandbox/school2023/team4/transactions-service/-/blob/main/src/main/java/ru/croc/transactions/domain/OrganizationFlexibleCashback.xtend)
 - [Transaction.xtend](https://gitlab.croc.ru/CROC.DRPO_RnD/jxfw/sandbox/school2023/team4/transactions-service/-/blob/main/src/main/java/ru/croc/transactions/domain/Transaction.xtend)
 
-# ↔️ The relationship between the entities can be represented by the following diagram.
+## ↔️ The relationship between the entities can be represented by the following diagram.
 
 ![img.png](img/img.png)
 
-# 📥 Endpoints
+## 📥 Endpoints
 
 This microservice has only one REST endpoint:
 /api/v1/transactions/handle-cashback-transaction - Generate a new transaction of cashback accrual on the input transaction
