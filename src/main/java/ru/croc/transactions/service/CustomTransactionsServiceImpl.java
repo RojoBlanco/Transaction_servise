@@ -50,9 +50,9 @@ public class CustomTransactionsServiceImpl implements CustomTransactionsService 
 
         boolean wasTransactionInLastPeriod = checkWasTransactionInLastPeriod(transactionDTO);
 
-        BigDecimal finalCashbackPercent = BigDecimal.ZERO;
-        if (wasMinBalanceBeforeTransaction && wasTransactionInLastPeriod && !cardDTO.getCardTypeName().equals(DEFAULT_CARD_NAME)) {
-            finalCashbackPercent = calculateFinalCashbackPercent(cardDTO, transactionDTO);
+        BigDecimal finalCashbackPercent = calculateFinalCashbackPercent(cardDTO, transactionDTO);
+        if (!wasMinBalanceBeforeTransaction || !wasTransactionInLastPeriod || cardDTO.getCardTypeName().equals(DEFAULT_CARD_NAME)) {
+            finalCashbackPercent = BigDecimal.ZERO;
         }
 
         saveTransactionToDatabase(transactionDTO);
